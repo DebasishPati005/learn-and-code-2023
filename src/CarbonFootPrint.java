@@ -10,16 +10,27 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class Assingment1API {
+public class CarbonFootPrint {
 
     public static void main(String[] args) {
-
         JSONParser jsonParserObj = new JSONParser();
-        String apiUrl = "https://api.jsonbin.io/v3/qs/653f79a954105e766fc8fd69";
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Enter email address: ");
-        String emailId = scan.nextLine();
-        System.out.print("Wait data is fetching ");
+        String apiUrl = "https://api.jsonbin.io/v3/qs/6548c78c0574da7622c2bba7";
+
+        JSONObject jsonData = getJsonData(apiUrl);
+        if (jsonData != null) {
+            Scanner scan = new Scanner(System.in);
+            System.out.print("Enter email address: ");
+            String emailId = scan.nextLine();
+            scan.close();
+            // Get elements within the JSON structure which is provided by jsonbin.io
+            JSONArray alllEmailRecords = (JSONArray) jsonData.get("record");
+            JSONObject matchedEmailObject = findEmailAddressDetails(alllEmailRecords, emailId);
+            printCarbonEmission(matchedEmailObject);
+        }
+    }
+
+    private static JSONObject getJsonData(String apiUrl) {
+        System.out.print("Wait connection is being established!");
 
         try {
             URL url = new URL(apiUrl);
@@ -39,19 +50,11 @@ public class Assingment1API {
                 }
                 reader.close();
 
-                Object obj = jsonParserObj.parse(response.toString());
+                JSONParser jsonParserObj = new JSONParser();
+                Object jsonData = jsonParserObj.parse(response.toString());
                 // Get elements within the JSON structure which is provided by jsonbin.io
                 // converted into JSON
-                JSONObject jsonObject = (JSONObject) obj;
-                // System.out.println(jsonObject.get("record") + "\n");
-
-                // Get elements within the JSON structure which is provided by jsonbin.io
-                JSONArray arrayOfEmails = (JSONArray) jsonObject.get("record");
-                JSONObject matchedEmailObject = findEmailAddressDetails(arrayOfEmails, emailId);
-
-                System.out.print("Success data is fetched! 😜");
-                calculateAndPrintCarbonEmission(matchedEmailObject);
-
+                return (JSONObject) jsonData;
             } else {
                 System.out.println("Failed to load Email Details\n Response code is: " + responseCode);
             }
@@ -59,12 +62,13 @@ public class Assingment1API {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        scan.close();
+
+        return null;
     }
 
-    public static JSONObject findEmailAddressDetails(JSONArray emailRecordArray, String emailId) {
+    public static JSONObject findEmailAddressDetails(JSONArray emailRecords, String emailId) {
         JSONObject matchedEmailDetails = null;
-        for (Object eachEmailRecord : emailRecordArray) {
+        for (Object eachEmailRecord : emailRecords) {
             JSONObject emailDetail = (JSONObject) eachEmailRecord;
             String eachEmail = (String) emailDetail.get("email");
 
@@ -75,7 +79,7 @@ public class Assingment1API {
         return matchedEmailDetails;
     }
 
-    public static void calculateAndPrintCarbonEmission(JSONObject emailDetailObject) {
+    public static void printCarbonEmission(JSONObject emailDetailObject) {
         if (emailDetailObject == null) {
             System.out.println("Sorry no email record found with your given id");
         } else {
@@ -89,8 +93,8 @@ public class Assingment1API {
     }
 
     static String getDomainFromEmail(String emailId) {
-        String wholeDomain = emailId.split("@")[1];
-        return wholeDomain.length() > 1 ? wholeDomain.split("\\.")[0] : null;
+        String domain = emailId.split("@")[1];
+        return domain.length() > 1 ? domain.split("\\.")[0] : null;
     }
 
     static double getInboxMailsCarbonEmission(long inboxEmails) {
