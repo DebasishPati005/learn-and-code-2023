@@ -27,7 +27,7 @@ public class CarbonFootprint {
 
 		inboxMails = storeInstance.getFolder("Inbox").getMessageCount();
 		spamMails = storeInstance.getFolder("[Gmail]/Spam").getMessageCount();
-		sentMails = storeInstance.getFolder("[Gmail]/Sent Mail").getMessageCount();
+		sentMails = storeInstance.getFolder("[Gmail]/Sent Mailmr.debasish005@gmail.com").getMessageCount();
 
 		printCarbonFootprint();
 
