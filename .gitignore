@@ -11,6 +11,7 @@ tmp64/
 *.bak
 *.swp
 *~
+.vscode
 
 # STS (Spring Tool Suite) related files
 .sts
