@@ -5,10 +5,10 @@ import java.util.Arrays;
 public class NumberManipulator {
 	public static int ascendingSort(int inputNumber) {
 		String number = Integer.toString(inputNumber);
-		char inputCharacters[] = number.toCharArray();
+		char[] inputCharacters = number.toCharArray();
 		Arrays.sort(inputCharacters);
-		int ascendingSortNumber = Integer.parseInt(new String(inputCharacters));
-		return ascendingSortNumber;
+		// int ascendingOrder = Integer.parseInt(new String(inputCharacters));
+		return Integer.parseInt(new String(inputCharacters));
 	}
 
 	public static int descendingSort(int ascendingSortNumber) {
