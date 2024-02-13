@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class CarbonFootPrint {
 
     public static void main(String[] args) {
-        JSONParser jsonParserObj = new JSONParser();
+        // JSONParser jsonParserObj = new JSONParser();
         String apiUrl = "https://api.jsonbin.io/v3/qs/6548c78c0574da7622c2bba7";
 
         JSONObject jsonData = getJsonData(apiUrl);
@@ -23,8 +23,8 @@ public class CarbonFootPrint {
             String emailId = scan.nextLine();
             scan.close();
             // Get elements within the JSON structure which is provided by jsonbin.io
-            JSONArray alllEmailRecords = (JSONArray) jsonData.get("record");
-            JSONObject matchedEmailObject = findEmailAddressDetails(alllEmailRecords, emailId);
+            JSONArray allEmailRecords = (JSONArray) jsonData.get("record");
+            JSONObject matchedEmailObject = findEmailAddressDetails(allEmailRecords, emailId);
             printCarbonEmission(matchedEmailObject);
         }
     }
@@ -42,7 +42,8 @@ public class CarbonFootPrint {
             int responseCode = connection.getResponseCode();
 
             if (responseCode == 200) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                BufferedReader reader =
+                        new BufferedReader(new InputStreamReader(connection.getInputStream()));
                 StringBuilder response = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -56,7 +57,8 @@ public class CarbonFootPrint {
                 // converted into JSON
                 return (JSONObject) jsonData;
             } else {
-                System.out.println("Failed to load Email Details\n Response code is: " + responseCode);
+                System.out.println(
+                        "Failed to load Email Details\n Response code is: " + responseCode);
             }
             connection.disconnect();
         } catch (IOException | ParseException e) {
@@ -83,12 +85,14 @@ public class CarbonFootPrint {
         if (emailDetailObject == null) {
             System.out.println("Sorry no email record found with your given id");
         } else {
-            System.out.println("{\n" +
-                    "source : " + getDomainFromEmail((String) emailDetailObject.get("email")) + "\n" +
-                    "inbox : " + getInboxMailsCarbonEmission((long) emailDetailObject.get("inbox")) + " KG\n" +
-                    "sent : " + getSentMailCarbonEmission((long) emailDetailObject.get("sent")) + " KG\n" +
-                    "spam : " + getSpamMailsCarbonEmission((long) emailDetailObject.get("spam")) + " KG\n" +
-                    "}");
+            System.out.println("{\n" + "source : "
+                    + getDomainFromEmail((String) emailDetailObject.get("email")) + "\n"
+                    + "inbox : "
+                    + getInboxMailsCarbonEmission((long) emailDetailObject.get("inbox")) + " KG\n"
+                    + "sent : " + getSentMailCarbonEmission((long) emailDetailObject.get("sent"))
+                    + " KG\n" + "spam : "
+                    + getSpamMailsCarbonEmission((long) emailDetailObject.get("spam")) + " KG\n"
+                    + "}");
         }
     }
 

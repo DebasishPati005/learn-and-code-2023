@@ -7,7 +7,7 @@ public class Assignment1 {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         System.out.print("Enter email address: ");
-        String emaiAddress = scan.nextLine();
+        String emailAddress = scan.nextLine();
         System.out.print("Enter inbox  emails: ");
         int inboxEmails = scan.nextInt();
         System.out.print("Enter sent  emails: ");
@@ -15,17 +15,15 @@ public class Assignment1 {
         System.out.print("Enter spam  emails: ");
         int spamEmails = scan.nextInt();
 
-        String domainName = getDomainFromEmail(emaiAddress);
+        String domainName = getDomainFromEmail(emailAddress);
         double carbonEmissionByInbox = getInboxMailsCarbonEmission(inboxEmails);
         double carbonEmissionBySentMails = getSentMailCarbonEmission(sentEmails);
         double carbonEmissionBySpamMail = getSpamMailsCarbonEmission(spamEmails);
 
-        System.out.println("{\n" +
-                "source : " + domainName + "\n" +
-                "inbox : " + carbonEmissionByInbox + " KG\n" +
-                "sent : " + carbonEmissionBySentMails + " KG\n" +
-                "spam : " + carbonEmissionBySpamMail + " KG\n" +
-                "}");
+        System.out.println("{\n" + "source : " + domainName + "\n" + "inbox : "
+                + carbonEmissionByInbox + " KG\n" + "sent : " + carbonEmissionBySentMails + " KG\n"
+                + "spam : " + carbonEmissionBySpamMail + " KG\n" + "}");
+        scan.close();
     }
 
     static String getDomainFromEmail(String emailId) {
