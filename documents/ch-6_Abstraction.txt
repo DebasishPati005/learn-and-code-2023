@@ -1,0 +1,36 @@
+Access Control:
+Involves controlling the access to the internal state of an object.
+Getters and setters are part of this control.
+
+Behaviour Abstraction:
+In addition to managing data, abstraction involves abstracting the behavior of an object. 
+This includes defining methods that represent the actions.
+
+
+Reducing Complexity:
+Abstraction aims to simplify the understanding and usage of a class by hiding unnecessary details.
+
+
+
+SUMMARY
+while getters and setters are a part of data abstraction, the concept goes beyond mere variable access.
+It involves organizing and presenting the internal details of a class in a way
+that promotes clarity, encapsulation, and controlled interaction with external code.
+Essential features of an object and providing a well-defined interface for working with those features.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OutFile ${env:tmp}\wazuh-agent.msi; msiexec.exe /i ${env:tmp}\wazuh-agent.msi /q
+ WAZUH_MANAGER='zeus.intimetec.com' WAZUH_REGISTRATION_SERVER='zeus.intimetec.com'
+ WAZUH_REGISTRATION_PASSWORD='GgUFaX0srSkuoWt' WAZUH_AGENT_GROUP='WorkStations' 
