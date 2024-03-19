@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { Types, Document } from 'mongoose';
 
 export class StatusError extends Error {
     status: number | undefined;
@@ -18,6 +18,6 @@ export enum UserRole {
     admin = 'admin',
 }
 
-export interface UserResponse extends Omit<UserRequest, 'password'> {
+export interface UserResponse extends UserRequest, Document {
     id: Types.ObjectId;
 }

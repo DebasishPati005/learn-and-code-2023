@@ -1,9 +1,10 @@
 import { Transporter, createTransport } from 'nodemailer';
 import { MailConfig, MailResponse } from '../../common/types/mail';
 import { RESPONSE_MESSAGE } from '../../common/constants';
+import { INotificationService } from './notification.service.contract';
 
-export class NotificationService {
-    transporter!: Transporter;
+export class NotificationService implements INotificationService {
+    private transporter!: Transporter;
     private static instance?: NotificationService;
 
     private constructor() {
@@ -31,7 +32,7 @@ export class NotificationService {
         });
     }
 
-    public async sentMail(mailConfig: MailConfig): Promise<MailResponse> {
+    public async sendMail(mailConfig: MailConfig): Promise<MailResponse> {
         try {
             await this.transporter.sendMail({
                 from: process.env.GOOGLE_SES_USER,

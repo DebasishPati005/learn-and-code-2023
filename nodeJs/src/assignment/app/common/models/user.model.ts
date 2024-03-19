@@ -1,7 +1,7 @@
-import mongoose, { Schema } from 'mongoose';
-import { UserRequest, UserRole } from '../types';
+import mongoose, {  Schema } from 'mongoose';
+import { UserResponse, UserRole } from '../types';
 
-const userSchema = new Schema<UserRequest>(
+const userSchema = new Schema<UserResponse>(
     {
         name: { type: String, required: true },
         email: { type: String, required: true },
@@ -12,6 +12,14 @@ const userSchema = new Schema<UserRequest>(
     { timestamps: true }
 );
 
-const User = mongoose.model<UserRequest>('User', userSchema);
+userSchema.set('toJSON', {
+    transform: function (_doc, ret) {
+        ret.id = ret._id;
+        delete ret.password;
+        delete ret.__v;
+    },
+});
+
+const User = mongoose.model<UserResponse>('User', userSchema);
 
 export default User;

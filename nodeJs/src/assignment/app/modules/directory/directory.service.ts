@@ -1,9 +1,22 @@
 import fs from 'fs';
 import path from 'path';
 import { UserRequest } from '../../common/types';
+import { IDirectoryService } from './directory.service.contract';
 
-export default class DirectoryService {
-    static createDirectory(userReq: UserRequest): Promise<string> {
+export default class DirectoryService implements IDirectoryService {
+    private static directoryServiceInstance?: DirectoryService;
+
+    private constructor() {}
+
+    static getDirectoryServiceInstance(): DirectoryService {
+        if (!this.directoryServiceInstance) {
+            return new DirectoryService();
+        } else {
+            return this.directoryServiceInstance;
+        }
+    }
+
+    public createDirectory(userReq: UserRequest): Promise<string> {
         return new Promise((resolve, reject) => {
             const directoryPath = path.join(__dirname, '../../../directories', userReq.email);
             const filePath = path.join(directoryPath, userReq.name + '.txt');
