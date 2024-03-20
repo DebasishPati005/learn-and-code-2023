@@ -15,3 +15,7 @@ tmp64/
 
 # STS (Spring Tool Suite) related files
 .sts
+node_modules
+build
+dist
+directory
